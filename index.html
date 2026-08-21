@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Floor Calc Pet — расчёт сметы</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .controls { margin-bottom: 20px; }
+    button { padding: 10px 20px; cursor: pointer; }
+
+    /* Прогресс-бар */
+    .progress-container {
+      margin-top: 15px;
+      display: none;
+    }
+    .progress-bar-bg {
+      height: 8px;
+      background: #ddd;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      width: 0%;
+      height: 100%;
+      background: #4caf50;
+      transition: width 0.2s;
+    }
+    .progress-text {
+      margin-top: 6px;
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>Floor Calc Pet — расчёт сметы</h1>
+
+  <div class="controls">
+    <button onclick="runCalculation()">Рассчитать смету</button>
+  </div>
+
+  <!-- Прогресс-бар -->
+  <div class="progress-container" id="progressContainer">
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressFill"></div>
+    </div>
+    <p class="progress-text" id="progressText"></p>
+  </div>
+
+  <script>
+    async function runCalculation() {
+      const container = document.getElementById('progressContainer');
+      const fill = document.getElementById('progressFill');
+      const text = document.getElementById('progressText');
+
+      container.style.display = 'block';
+      fill.style.width = '0%';
+      text.textContent = '';
+
+      const stages = [
+        { label: 'Считаем площадь помещения…', percent: 25 },
+        { label: 'Подбираем подходящие покрытия…', percent: 50 },
+        { label: 'Рассчитываем НДС и доставку…', percent: 75 },
+        { label: 'Формируем итоговую смету…', percent: 100 }
+      ];
+
+      for (const stage of stages) {
+        text.textContent = stage.label;
+        fill.style.width = `${stage.percent}%`;
+        await new Promise(r => setTimeout(r, 600));
+      }
+
+      text.textContent = 'Готово!';
+
+      setTimeout(() => {
+        container.style.display = 'none';
+        fill.style.width = '0%';
+        text.textContent = '';
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
